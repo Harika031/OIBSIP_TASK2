@@ -1,0 +1,94 @@
+//Number Guessing Game
+import java.util.*;
+public class NumberGuessingGame
+{
+    public static void main(String[] args) {
+        System.out.println("*******Welcome to the number guessing game******* ");
+        int score=0;
+        int no_of_rounds=0;
+        int menuOption ;
+        do {
+            System.out.println("1.Play the game");
+            System.out.println("2.Score Board");
+            System.out.println("3.Exit the game\n\n");
+
+            Scanner sc = new Scanner(System.in);
+            System.out.println("What action would you like to do from the above actions?");
+            menuOption = sc.nextInt();
+            switch(menuOption)
+            {
+                case 1 :     System.out.println("\nEnter number of rounds you want to play : ");
+                    no_of_rounds = sc.nextInt();
+                    score=0;
+                    for(int i=1;i<=no_of_rounds;i++){
+                        System.out.println("\nEnter the range : ");
+                        int range = sc.nextInt();
+                        int randomNumber = getRandomNumber(range);
+                        boolean b = guessNumber(randomNumber);
+                        if(b==true)
+                            score++;
+                    }
+                    break;
+                case 2 :  scoreBoard(no_of_rounds,score);
+                    break;
+                case 3 : System.out.println("\nThanks for playing!!!!!!\n\n");
+                    System.exit(1);
+                    break;
+                default : System.out.println("....Invalid Option....\nChoose the correct action!!");
+            }
+
+        }while(menuOption!=3);
+
+    }
+
+
+    public static void scoreBoard(int no_of_rounds,int score)
+    {
+        if(score==no_of_rounds && no_of_rounds!=0)
+        {
+            System.out.println("\n--------------------------------------------------------------------------");
+            System.out.println("  Congratss!!!!!You won all the rounds ...Your score is "+score);
+            System.out.println("--------------------------------------------------------------------------\n");
+        }
+        else
+        {
+            System.out.println("\n----------------------------------------");
+            System.out.println("     Your score is "+score);
+            System.out.println("----------------------------------------\n");
+        }
+    }
+    public static int getRandomNumber(int range)
+    {
+        int randomNumber = (int )(Math.random()*range);
+        return randomNumber;
+    }
+    public static boolean guessNumber(int randomNumber)
+    {
+        int attempts=5,count=1;
+        Scanner sc= new Scanner(System.in);
+        do
+        {
+            System.out.println("\nGuess the number : ");
+            int guess = sc.nextInt();
+            if(guess > randomNumber)
+            {
+                System.out.println("Your guess is high\n");
+            }
+            else if(guess < randomNumber)
+            {
+                System.out.println("Your guess is low\n");
+            }
+            else
+            {
+                System.out.println("You guessed right! You won!!\n");
+                return true;
+            }
+            count++;
+        }while(count <= attempts);
+
+
+        System.out.println("You lost!!!!\nThe correct answer is "+randomNumber);
+        return false;
+
+    }
+}
